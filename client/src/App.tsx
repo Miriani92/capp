@@ -1,8 +1,20 @@
+import { Fragment } from "react";
+import { Dashboard } from "./pages/Dashboard";
+import { GlobalStyle } from "./Global.styled";
+import { Chart } from "./pages/Chart";
+import { Navbar } from "./components/NavBar";
+import { Routes, Route } from "react-router-dom";
+
 function App() {
   return (
-    <div>
-      <h1>Hello Capp</h1>
-    </div>
+    <Fragment>
+      <GlobalStyle />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/chart" element={<Chart />} />
+      </Routes>
+    </Fragment>
   );
 }
 

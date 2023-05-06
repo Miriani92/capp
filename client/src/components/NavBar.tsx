@@ -1,4 +1,3 @@
-import React from "react";
 import { ButtonsWrapper, Button, Container } from "./Navbar.styled";
 
 export const Navbar = () => {

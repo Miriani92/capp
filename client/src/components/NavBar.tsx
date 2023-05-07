@@ -5,7 +5,7 @@ export const Navbar = () => {
     <Container>
       <ButtonsWrapper>
         <Button to="/">Dashboard</Button>
-        <Button to="/chart">CHART</Button>
+        <Button to="/chart">Chart</Button>
       </ButtonsWrapper>
     </Container>
   );

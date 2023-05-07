@@ -6,7 +6,7 @@ export const getPieData = (users: any) => {
     const { city } = item;
     if (obj[city]) {
       obj[city] = obj[city] + 1;
-      const percent = Number(((obj[city] / users.length) * 100).toFixed(0));
+      const percent = Number(((obj[city] / users.length) * 100).toFixed(2));
       pieTitleConfig[city] = percent;
     } else {
       obj[city] = 1;

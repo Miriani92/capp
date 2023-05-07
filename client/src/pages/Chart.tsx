@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { PieWrapper } from "./Chart.styled";
 import { Pie } from "@ant-design/plots";
 import { useStore } from "../store/useUsersStore";
 import { getPieData } from "../utils/chart";
@@ -23,7 +24,7 @@ export const Chart = () => {
     label: {
       type: "inner",
       offset: "-30%",
-      content: ({ percent }) => `${(percent * 100).toFixed(0)}%`,
+      content: ({ percent }) => `${(percent * 100).toFixed(2)}%`,
       style: {
         fontSize: 14,
         textAlign: "center",
@@ -36,5 +37,9 @@ export const Chart = () => {
     ],
   };
 
-  return <Pie {...config} />;
+  return (
+    <PieWrapper>
+      <Pie {...config} />
+    </PieWrapper>
+  );
 };

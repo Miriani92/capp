@@ -8,25 +8,25 @@ export const ButtonsWrapper = styled.div`
   align-items: center;
   justify-content: center;
   gap: 10px;
-  width: 200px;
-  height: 60px;
-  border-radius: 60px;
-  background-color: grey;
+  width: 250px;
+  height: 70px;
+  border-radius: 70px;
+  background-color: #e2e8f0;
 `;
 
 export const Button = styled(NavLink)`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 80px;
+  width: 100px;
   border-radius: 40px;
-  height: 60%;
+  height: 40px;
   border: none;
   color: black;
   text-decoration: none;
   &:hover,
   &.active {
-    background-color: white;
+    background-color: #bdc7d4;
   }
 `;
 export const Container = styled.div`

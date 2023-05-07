@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
+import { Wrapper } from "./Dashboard.styled";
 import { useStore } from "../store/useUsersStore";
 import { Table, Button } from "antd";
 
@@ -51,8 +52,8 @@ export const Dashboard = () => {
 
   //  ISSUE ===> key prop on the table
   return (
-    <div>
+    <Wrapper>
       <Table dataSource={users} columns={columnsData} id={users.id} />
-    </div>
+    </Wrapper>
   );
 };

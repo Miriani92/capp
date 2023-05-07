@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { flattendData } from "../utils/store";
-import axios from "axios";
 import { BASE_URL } from "../constants";
+import axios from "axios";
 
 export type User = {
   id: number;
@@ -16,10 +16,8 @@ export type User = {
 export type Store = {
   isLoading: boolean;
   users: User[];
-  // needs to be specified
-  column: any;
   addUser: (user: User) => void;
-  delteUser: () => void;
+  deleteUser: (id: number) => void;
   editUser: () => void;
   getUsers: () => void;
 };
@@ -27,18 +25,26 @@ export type Store = {
 export const useStore = create<Store>((set, get) => ({
   isLoading: true,
   users: [],
-  column: [],
   addUser: (user: User) => {},
-  delteUser: () => {},
+  deleteUser: async (id) => {
+    try {
+      set({ isLoading: true });
+      await axios.delete(`${BASE_URL}/${id}`).then((response: any) => {
+        const { data } = response.data;
+        const modifiedData: User[] = flattendData(data);
+        set({ users: modifiedData, isLoading: false });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
   editUser: () => {},
   getUsers: async () => {
     try {
       set({ isLoading: true });
       const data = axios.get(BASE_URL).then((response) => {
         const { data } = response.data;
-
         const modifiedData: User[] = flattendData(data);
-        console.log(modifiedData);
         set({ users: modifiedData, isLoading: false });
       });
     } catch (error) {

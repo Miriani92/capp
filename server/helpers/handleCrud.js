@@ -6,7 +6,12 @@ export const getAll = () => {
     .then((res) => JSON.parse(res));
   return users;
 };
-export const deleteOne = async () => {};
+export const deleteOne = async (id) => {
+  const users = await getAll();
+  const newUsersData = users.filter((user) => user.id !== id);
+  await fs.promises.writeFile(PATH, JSON.stringify(newUsersData));
+};
+
 export const updateOne = async () => {};
 export const addOne = async () => {
   const data = await getAll();

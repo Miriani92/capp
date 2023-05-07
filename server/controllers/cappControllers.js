@@ -18,7 +18,13 @@ export const addUser = async (req, res) => {
 };
 export const deleteUser = async (req, res) => {
   try {
-  } catch (error) {}
+    const { id } = req.params;
+    await deleteOne(parseInt(id));
+    const updatedUsers = await getAll();
+    res.status(200).json({ data: updatedUsers });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 };
 export const updateUser = async (req, res) => {
   try {

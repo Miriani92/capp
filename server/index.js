@@ -1,11 +1,12 @@
 import express from "express";
+import { json } from "express";
 import { router as cappRoutes } from "./routes/cappRoutes.js";
 
 const port = 5000;
 
 const app = express();
 
-app.use(express.json());
+app.use(json());
 
 app.use("/api/users", cappRoutes);
 

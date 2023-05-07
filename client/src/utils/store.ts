@@ -5,7 +5,7 @@ const flatten = (obj: any) => {
     if (typeof obj[i] === "object" && !Array.isArray(obj[i])) {
       const temp = flatten(obj[i]);
       for (const j in temp) {
-        result[i + "." + j] = temp[j];
+        result[j] = temp[j];
       }
     } else {
       result[i] = obj[i];

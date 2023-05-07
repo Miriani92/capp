@@ -9,9 +9,11 @@ export const getUsers = async (req, res) => {
   }
 };
 export const addUser = async (req, res) => {
+  const newUser = req.body;
   try {
-    const users = await addOne();
-    res.status(200).json({ data: users || {} });
+    await addOne(newUser);
+    const updatedUsers = await getAll();
+    res.status(200).json({ data: updatedUsers || {} });
   } catch (error) {
     res.status(500).json({ error });
   }

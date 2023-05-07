@@ -25,7 +25,19 @@ export type Store = {
 export const useStore = create<Store>((set, get) => ({
   isLoading: true,
   users: [],
-  addUser: (user: User) => {},
+  addUser: async (user: any) => {
+    try {
+      console.log(user);
+      set({ isLoading: true });
+      axios.post(`${BASE_URL}`, { ...user }).then((response: any) => {
+        const { data } = response.data;
+        const modifiedData: User[] = flattendData(data);
+        set({ users: modifiedData, isLoading: false });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
   deleteUser: async (id) => {
     try {
       set({ isLoading: true });
@@ -42,7 +54,7 @@ export const useStore = create<Store>((set, get) => ({
   getUsers: async () => {
     try {
       set({ isLoading: true });
-      const data = axios.get(BASE_URL).then((response) => {
+      axios.get(BASE_URL).then((response) => {
         const { data } = response.data;
         const modifiedData: User[] = flattendData(data);
         set({ users: modifiedData, isLoading: false });

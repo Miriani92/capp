@@ -13,6 +13,9 @@ export const deleteOne = async (id) => {
 };
 
 export const updateOne = async () => {};
-export const addOne = async () => {
+export const addOne = async (user) => {
   const data = await getAll();
+  console.log(user);
+  data.unshift(user);
+  await fs.promises.writeFile(PATH, JSON.stringify(data));
 };

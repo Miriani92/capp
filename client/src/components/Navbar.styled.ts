@@ -30,9 +30,10 @@ export const Button = styled(NavLink)`
   }
 `;
 export const Container = styled.div`
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100vw;
+  width: 100%;
   height: 150px;
 `;

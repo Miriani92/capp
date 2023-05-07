@@ -1,17 +1,19 @@
 import React, { useEffect } from "react";
 import { PieWrapper } from "./Chart.styled";
+// @ts-ignore
 import { Pie } from "@ant-design/plots";
 import { useStore } from "../store/useUsersStore";
 import { getPieData } from "../utils/chart";
+import { Loader } from "../components/Loader";
 
 export const Chart = () => {
   const { isLoading, users, getUsers } = useStore((state: any) => state);
   useEffect(() => {
-    if (isLoading) {
+    if (users.length < 1) {
       getUsers();
     }
-  }, []);
-  if (isLoading) return <h1>Loading...</h1>;
+  }, [getUsers, users]);
+  if (isLoading) return <Loader />;
 
   const data = getPieData(users);
 
@@ -24,7 +26,7 @@ export const Chart = () => {
     label: {
       type: "inner",
       offset: "-30%",
-      content: ({ percent }) => `${(percent * 100).toFixed(2)}%`,
+      content: (state: any) => `${(state.percent * 100).toFixed(2)}%`,
       style: {
         fontSize: 14,
         textAlign: "center",

@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { Wrapper } from "./Dashboard.styled";
 import { useStore } from "../store/useUsersStore";
 import { Table, Button } from "antd";
+import { Loader } from "../components/Loader";
+import { FormModal } from "../components/Modal";
 
 export const Dashboard = () => {
   const { isLoading, getUsers, users, deleteUser } = useStore(
@@ -14,7 +16,7 @@ export const Dashboard = () => {
     }
   }, [getUsers, isLoading]);
 
-  if (isLoading) return <h2>Loading...</h2>;
+  if (isLoading) return <Loader />;
 
   const columnsData = (() => {
     const columns = [];
@@ -53,6 +55,7 @@ export const Dashboard = () => {
   //  ISSUE ===> key prop on the table
   return (
     <Wrapper>
+      <FormModal />
       <Table dataSource={users} columns={columnsData} id={users.id} />
     </Wrapper>
   );

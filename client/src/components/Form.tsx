@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Select, Form, Input } from "antd";
 import { useStore } from "../store/useUsersStore";
 import { FormProps } from "./Modal";
@@ -26,7 +26,6 @@ export const UserForm: React.FC<FormProps> = ({
     phone: phone || "",
   });
   const onSubmit = async () => {
-    console.log("Hello from the onSubmit");
     setFormData({ ...formData });
     if (handleSubmit) {
       handleSubmit(formData);
@@ -50,6 +49,19 @@ export const UserForm: React.FC<FormProps> = ({
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
+  useEffect(() => {
+    setFormData({
+      id: id || new Date().getTime(),
+      name: name || "",
+      email: email || "",
+      gender: gender || "",
+      address: {
+        street: street || "",
+        city: city || "",
+      },
+      phone: phone || "",
+    });
+  }, [name]);
   return (
     <Form
       name="basic"

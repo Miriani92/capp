@@ -3,10 +3,10 @@ import {
   getUsers,
   addUser,
   deleteUser,
-  updateUser,
+  editeUser,
 } from "../controllers/cappControllers.js";
 
 export const router = express.Router();
 
 router.route("/").get(getUsers).post(addUser);
-router.route("/:id").delete(deleteUser).patch(updateUser);
+router.route("/:id").delete(deleteUser).patch(editeUser);

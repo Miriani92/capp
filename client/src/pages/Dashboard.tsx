@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Wrapper } from "./Dashboard.styled";
 import { useStore } from "../store/useUsersStore";
 import { Table, Button } from "antd";
@@ -6,9 +6,23 @@ import { Loader } from "../components/Loader";
 import { FormModal } from "../components/Modal";
 
 export const Dashboard = () => {
-  const { isLoading, getUsers, users, deleteUser } = useStore(
-    (state: any) => state
-  );
+  const [record, setRecord] = useState({
+    id: 0,
+    name: "",
+    gender: "",
+    email: "",
+    phone: "",
+    city: "",
+    street: "",
+  });
+  const {
+    toggleAddModal,
+    toggleModal,
+    isLoading,
+    getUsers,
+    users,
+    deleteUser,
+  } = useStore((state: any) => state);
 
   useEffect(() => {
     if (isLoading) {
@@ -51,12 +65,25 @@ export const Dashboard = () => {
     columns.push(deleteColumn);
     return columns;
   })();
+  // ISSUE ===> key prop on the table
 
-  //  ISSUE ===> key prop on the table
   return (
     <Wrapper>
-      <FormModal />
-      <Table dataSource={users} columns={columnsData} id={users.id} />
+      <FormModal {...record} />
+      <Table
+        dataSource={users}
+        columns={columnsData}
+        id={users.id}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              setRecord({ ...record });
+              toggleAddModal(true);
+              toggleModal(true);
+            },
+          };
+        }}
+      />
     </Wrapper>
   );
 };

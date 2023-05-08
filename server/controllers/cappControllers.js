@@ -1,4 +1,4 @@
-import { getAll, deleteOne, addOne, updateOne } from "../helpers/handleCrud.js";
+import { getAll, deleteOne, addOne, editOne } from "../helpers/handleCrud.js";
 
 export const getUsers = async (req, res) => {
   try {
@@ -28,7 +28,13 @@ export const deleteUser = async (req, res) => {
     res.status(500).json({ error });
   }
 };
-export const updateUser = async (req, res) => {
+export const editeUser = async (req, res) => {
+  const user = req.body;
   try {
-  } catch (error) {}
+    await editOne(user);
+    const updatedUsers = await getAll();
+    res.status(200).json({ data: updatedUsers });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
 };

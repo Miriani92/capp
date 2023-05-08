@@ -1,25 +1,39 @@
 import React, { useState } from "react";
 import { Button, Select, Form, Input } from "antd";
 import { useStore } from "../store/useUsersStore";
-import staticMethods from "antd/es/message";
+import { FormProps } from "./Modal";
 
-export const UserForm: React.FC = () => {
+export const UserForm: React.FC<FormProps> = ({
+  id,
+  name,
+  email,
+  gender,
+  city,
+  phone,
+  street,
+  handleSubmit,
+}) => {
   const { addUser } = useStore((state: any) => state);
   const [formData, setFormData] = useState({
-    id: new Date().getTime(),
-    name: "",
-    email: "",
-    gender: "",
+    id: id || new Date().getTime(),
+    name: name || "",
+    email: email || "",
+    gender: gender || "",
     address: {
-      street: "",
-      city: "",
+      street: street || "",
+      city: city || "",
     },
-    phone: "",
+    phone: phone || "",
   });
-
   const onSubmit = async () => {
+    console.log("Hello from the onSubmit");
     setFormData({ ...formData });
-    addUser(formData);
+    if (handleSubmit) {
+      handleSubmit(formData);
+    } else {
+      addUser(formData);
+    }
+
     setFormData({
       id: 0,
       name: "",
@@ -36,7 +50,6 @@ export const UserForm: React.FC = () => {
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
-
   return (
     <Form
       name="basic"
@@ -52,9 +65,13 @@ export const UserForm: React.FC = () => {
         label="Name"
         name="Name"
         valuePropName={formData.name}
-        rules={[{ required: true, message: "Please input your Name!" }]}
+        rules={[
+          { required: name ? false : true, message: "Please input your Name!" },
+        ]}
       >
         <Input
+          value={handleSubmit ? formData.name : name}
+          defaultValue={name || ""}
           onChange={(e) =>
             setFormData((state: any) => {
               const { value } = e.target;
@@ -71,9 +88,16 @@ export const UserForm: React.FC = () => {
         label="Email"
         name="Email"
         valuePropName={formData.email}
-        rules={[{ required: true, message: "Please input your Email!" }]}
+        rules={[
+          {
+            required: email ? false : true,
+            message: "Please input your Email!",
+          },
+        ]}
       >
         <Input
+          value={handleSubmit ? formData.email : email}
+          defaultValue={email || ""}
           onChange={(e) =>
             setFormData((state: any) => {
               const { value } = e.target;
@@ -89,9 +113,16 @@ export const UserForm: React.FC = () => {
         label="Street"
         name="Street"
         valuePropName={formData.address.street}
-        rules={[{ required: true, message: "Please input your Street!" }]}
+        rules={[
+          {
+            required: street ? false : true,
+            message: "Please input your Street!",
+          },
+        ]}
       >
         <Input
+          value={handleSubmit ? formData.address.street : street}
+          defaultValue={street || ""}
           onChange={(e) =>
             setFormData((state: any) => {
               const { value } = e.target;
@@ -110,9 +141,13 @@ export const UserForm: React.FC = () => {
         label="City"
         name="City"
         valuePropName={formData.address.city}
-        rules={[{ required: true, message: "Please input your City!" }]}
+        rules={[
+          { required: city ? false : true, message: "Please input your City!" },
+        ]}
       >
         <Input
+          value={handleSubmit ? formData.address.city : city}
+          defaultValue={city || ""}
           onChange={(e) =>
             setFormData((state: any) => {
               const { value } = e.target;
@@ -131,9 +166,16 @@ export const UserForm: React.FC = () => {
         label="Phone"
         name="Phone"
         valuePropName={formData.phone}
-        rules={[{ required: true, message: "Please input your Phone Number!" }]}
+        rules={[
+          {
+            required: phone ? false : true,
+            message: "Please input your Phone Number!",
+          },
+        ]}
       >
         <Input
+          value={handleSubmit ? formData.phone : phone}
+          defaultValue={phone || ""}
           onChange={(e) =>
             setFormData((state: any) => {
               const { value } = e.target;
@@ -151,6 +193,9 @@ export const UserForm: React.FC = () => {
         wrapperCol={{ offset: 8, span: 16 }}
       >
         <Select
+          defaultActiveFirstOption
+          value={handleSubmit ? formData.gender : gender}
+          defaultValue={"Female"}
           onChange={(value) =>
             setFormData((state: any) => {
               return {
@@ -159,14 +204,12 @@ export const UserForm: React.FC = () => {
               };
             })
           }
-          defaultValue={{ value: "Female", label: "Female" }}
           options={[
             { value: "Male", label: "Male" },
             { value: "Female", label: "Female" },
           ]}
         />
       </Form.Item>
-
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
         <Button type="primary" htmlType="submit">
           Submit
@@ -175,12 +218,3 @@ export const UserForm: React.FC = () => {
     </Form>
   );
 };
-
-// {
-//     "id": 19,
-//     "name": "Adriana Diaz",
-//     "email": "adrianadiaz@gology.com",
-//     "gender": "female",
-//     "address": { "street": "Lawton Street", "city": "San Diego" },
-//     "phone": "+1 (806) 473-2162"
-//   },

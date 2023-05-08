@@ -1,23 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
+import { useStore } from "../store/useUsersStore";
 import { ButtonWrapper } from "./Modal.styled";
 import { Button, Modal } from "antd";
 import { UserForm } from "./Form";
-
-export const FormModal: React.FC = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+export type FormProps = {
+  id?: number;
+  name?: string;
+  email?: string;
+  city?: string;
+  street?: string;
+  gender?: string;
+  phone?: string;
+  handleSubmit?: (user: any) => void;
+};
+export const FormModal: React.FC<FormProps> = (props) => {
+  const { isModalOpen, toggleModal, isAddModalOpen, toggleAddModal, editUser } =
+    useStore((state) => state);
 
   const showModal = () => {
-    setIsModalOpen(true);
+    toggleModal(true);
   };
 
   const handleOk = () => {
-    setIsModalOpen(false);
+    toggleModal(false);
+    toggleAddModal(false);
   };
 
   const handleCancel = () => {
-    setIsModalOpen(false);
+    toggleModal(false);
+    toggleAddModal(false);
   };
-
   return (
     <>
       <ButtonWrapper>
@@ -26,12 +38,16 @@ export const FormModal: React.FC = () => {
         </Button>
       </ButtonWrapper>
       <Modal
-        title="Form Modal"
+        title={isAddModalOpen ? "Edit Modal" : "Form Modal"}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <UserForm />
+        {isAddModalOpen ? (
+          <UserForm {...props} handleSubmit={editUser} />
+        ) : (
+          <UserForm />
+        )}
       </Modal>
     </>
   );

@@ -12,10 +12,19 @@ export const deleteOne = async (id) => {
   await fs.promises.writeFile(PATH, JSON.stringify(newUsersData));
 };
 
-export const updateOne = async () => {};
 export const addOne = async (user) => {
   const data = await getAll();
-  console.log(user);
   data.unshift(user);
   await fs.promises.writeFile(PATH, JSON.stringify(data));
+};
+
+export const editOne = async (user) => {
+  const users = await getAll();
+  const newUsersData = users.map((usr) => {
+    if (usr.id === user.id) {
+      return user;
+    }
+    return usr;
+  });
+  await fs.promises.writeFile(PATH, JSON.stringify(newUsersData));
 };

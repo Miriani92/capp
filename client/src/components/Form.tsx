@@ -206,8 +206,8 @@ export const UserForm: React.FC<FormProps> = ({
       >
         <Select
           defaultActiveFirstOption
+          defaultValue={handleSubmit ? formData.gender : gender}
           value={handleSubmit ? formData.gender : gender}
-          defaultValue={"Female"}
           onChange={(value) =>
             setFormData((state: any) => {
               return {
